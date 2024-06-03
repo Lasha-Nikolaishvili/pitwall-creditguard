@@ -15,3 +15,4 @@ class Card(models.Model):
     class Meta:
         verbose_name = _('Card')
         verbose_name_plural = _('Cards')
+        ordering = ('-id',)
