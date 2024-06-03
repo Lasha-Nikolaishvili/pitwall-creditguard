@@ -9,12 +9,6 @@ class CardSerializer(ModelSerializer):
         fields = '__all__'
 
 
-class CardListSerializer(ModelSerializer):
-    class Meta:
-        model = Card
-        fields = ('id', 'title', 'censored_number', 'is_valid')
-
-
 class CardCreateSerializer(ModelSerializer):
     card_number = CharField(max_length=16, write_only=True)
     ccv = IntegerField(min_value=100, max_value=999, write_only=True)

@@ -1,16 +1,15 @@
 from rest_framework.viewsets import GenericViewSet
-from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin
+from rest_framework.mixins import CreateModelMixin, ListModelMixin
 from rest_framework.filters import SearchFilter, OrderingFilter
-from cards.serializers import CardSerializer, CardListSerializer, CardCreateSerializer
+from cards.serializers import CardSerializer, CardCreateSerializer
 from cards.permissions import IsOwner
 from cards.utils import SerializerFactory
 from cards.models import Card
 
 
-class CardViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, GenericViewSet):
+class CardViewSet(CreateModelMixin, ListModelMixin, GenericViewSet):
     serializer_class = SerializerFactory(
         default=CardSerializer,
-        list=CardListSerializer,
         create=CardCreateSerializer,
     )
     permission_classes = [IsOwner]
