@@ -4,18 +4,13 @@ from cards.models import Card
 
 
 class CardSerializer(ModelSerializer):
-    class Meta:
-        model = Card
-        fields = '__all__'
-
-
-class CardCreateSerializer(ModelSerializer):
-    card_number = CharField(max_length=16, write_only=True)
+    card_number = CharField(min_length=16, max_length=16, write_only=True)
     ccv = IntegerField(min_value=100, max_value=999, write_only=True)
 
     class Meta:
         model = Card
-        fields = ('card_number', 'ccv')
+        fields = ('id', 'user', 'title', 'censored_number', 'is_valid', 'created_at', 'card_number', 'ccv')
+        read_only_fields = ('user', 'title', 'censored_number', 'is_valid')
         extra_kwargs = {
             'card_number': {'write_only': True},
             'ccv': {'write_only': True},
@@ -25,7 +20,6 @@ class CardCreateSerializer(ModelSerializer):
         user = self.context['request'].user
         card_number = validated_data.pop('card_number')
         ccv = validated_data.pop('ccv')
-        print(validated_data)
 
         title = f"{user.first_name} {user.last_name}"
         censored_number = f"{card_number[:4]}********{card_number[-4:]}"
