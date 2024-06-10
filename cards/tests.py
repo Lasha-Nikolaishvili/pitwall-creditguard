@@ -61,7 +61,7 @@ class CardAPITests(APITestCase):
             response = self.client.post('/cards-api/cards/', data, format='json')
             self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_card_validation_speed(self, expected_duration=35):
+    def test_card_validation_speed(self, expected_duration=10):
         start_time = time.perf_counter()
         for _ in range(100):
             card_data = self.generate_random_card_data()
